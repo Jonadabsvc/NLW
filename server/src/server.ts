@@ -1,10 +1,17 @@
 import express, { response } from 'express'
+import cors from 'cors'
+
 import { PrismaClient } from '@prisma/client';
 import { convertHourStringToMinutes } from './utils/convert-hour-string-to-minutes';
+import { convertMinutesToHoursString } from './utils/convert-minutes-to-hour-string';
 
 const app = express()
 
 app.use(express.json())
+
+/* Cors é usado para delimitar quais quem pode
+fazer requisições para o back-end*/
+app.use(cors())
 
 const prisma = new PrismaClient({
     log: ['query']
@@ -84,15 +91,17 @@ app.get('/games/:id/ads', async (request, response) => {
     return response.json(ads.map(ad => {
         return {
             ...ad,
-            weekDays: ad.weekDays.split(',')
+            weekDays: ad.weekDays.split(','),
+            hourStart: convertMinutesToHoursString(ad.hourStart),
+            hourEnd: convertMinutesToHoursString(ad.hourEnd),
         }
     }))
 })
 
-app.get('/games/:id/discord', async(request, response) => {
+app.get('/games/:id/discord', async (request, response) => {
     //lista discord por anuncio
     const adId = request.params.id;
-    
+
     const ad = await prisma.ad.findUniqueOrThrow({
         select: {
             discord: true,
