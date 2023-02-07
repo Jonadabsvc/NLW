@@ -1,4 +1,5 @@
 import { MagnifyingGlassPlus } from "phosphor-react"
+import { useState } from "react";
 import { GameBanner } from "./components/GameBanner";
 import './styles/main.css';
 // Componentes / Propriedades
@@ -8,6 +9,8 @@ import { CreateAdBanner } from "./components/CreateAdBanner";
 
 
 function App() {
+  const [] = useState(false)
+
   return (
     <div className="max-w-[1344px] mx-auto flex flex-col items-center my-20">
       <img src={logoImg} alt="" />
