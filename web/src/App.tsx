@@ -1,6 +1,11 @@
-import { MagnifyingGlassPlus } from "phosphor-react"
+import { MagnifyingGlassPlus } from "phosphor-react";
+
+import * as Dialog from '@radix-ui/react-dialog';
+
 import { useEffect, useState } from "react";
+
 import { GameBanner } from "./components/GameBanner";
+
 import './styles/main.css';
 // Componentes / Propriedades
 
@@ -50,13 +55,27 @@ function App() {
             key={game.id}
             bannerUrl={game.bannerUrl}
             title={game.title}
-            adsCount={game._count.ads} />
+            adsCount={game._count.ads}
+            />
           )
         })}
       </div>
 
+      <Dialog.Root>
       <CreateAdBanner />
 
+        <Dialog.Portal>
+          <Dialog.Overlay className="bg-black/60 inset-0 fixed"/>
+
+          <Dialog.Content>
+            <Dialog.Title>Publique um anúncio</Dialog.Title>
+
+            <Dialog.Content>
+              texto qualquer
+            </Dialog.Content>
+          </Dialog.Content>
+        </Dialog.Portal>
+      </Dialog.Root>
     </div>
   )
 
